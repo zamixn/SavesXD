@@ -102,6 +102,9 @@ namespace FrameworksXD.SavesXD
 
         private IEnumerator SaveCurrentSaveDataRoutine(bool saveToFile, System.Action<bool> callback)
         {
+            OnPreSave();
+            yield return null;
+
             var maxToProcess = Config.MaxSavablesToProcessPerFrame;
             var processedTemp = 0;
 
@@ -125,6 +128,8 @@ namespace FrameworksXD.SavesXD
             else
                 callback?.Invoke(true);
         }
+
+        protected abstract void OnPreSave();
 
         public void LoadSaveFile(int saveSlotIndex, System.Action<bool, SaveDataType> callback)
         {
@@ -182,6 +187,9 @@ namespace FrameworksXD.SavesXD
 
         private IEnumerator LoadCurrentSaveDataRoutine(System.Action<bool> callback)
         {
+            OnPreLoad();
+            yield return null;
+
             var maxToProcess = Config.MaxSavablesToProcessPerFrame;
             var processedTemp = 0;
 
@@ -201,6 +209,8 @@ namespace FrameworksXD.SavesXD
             yield return null;
             callback.Invoke(true);
         }
+
+        protected abstract void OnPreLoad();
         #endregion
 
         #region config handling
