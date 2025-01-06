@@ -1,0 +1,24 @@
+{
+  "name": "com.frameworksxd.savesxd",
+  "version": "0.1.0",
+  "displayName": "Saves XD",
+  "unity": "2019.1",
+  "unityRelease": "0b5",
+  "documentationUrl": "https://github.com/zamixn/SavesXD",
+  "changelogUrl": "https://github.com/zamixn/SavesXD",
+  "licensesUrl": "https://creativecommons.org/licenses/by/4.0/legalcode",
+  "keywords": [
+    "Save",
+    "Save System"
+  ],
+  "dependencies": {
+    "com.unity.nuget.newtonsoft-json": "3.0.2"
+  },
+  "author": {
+    "name": "\u017dygimantas Kadi\u0161a",
+    "email": "zygimantas.kadisa@gmail.com",
+    "url": "https://github.com/zamixn/SavesXD"
+  },
+  "type": "library",
+  "description": "A save system. Quick startup:\n\n1. Make new class: \"public class SaveSystemImplementation : SaveSystem<SaveData, ConfigFileData>\"\n2. Attach to a gameobject\n3. Create a new save file: \"SaveSystemImplementation.Instance.SetCurrentSaveData(new SaveData(0, \"testSave\"));\"\n4. Save game to file or to memory: \"SaveSystemImplementation.Instance.SaveCurrentSaveData\"\n5. Load save file from file: \"SaveSystemImplementation.Instance.LoadSaveFile\"\n5.1. After loading from file: \"SaveSystemImplementation.Instance.SetCurrentSaveData\"\n6. Load save data: \"SaveSystemImplementation.Instance.LoadCurrentSaveData\""
+}

@@ -1,0 +1,18 @@
+{
+    "name": "FrameworksXD.SaveXDEditor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:e492db8df57aafc4d841952404b00d17"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
