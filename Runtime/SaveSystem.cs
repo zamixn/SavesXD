@@ -218,6 +218,28 @@ namespace FrameworksXD.SavesXD
         public bool IsCurrentlySavingConfig() => CurrentlySavingConfig;
         public bool IsCurrentlyLoadingConfig() => CurrentlyLoadingConfig;
 
+        public void DoesConfigExist(System.Action<bool> callback)
+        {
+            if (!IsInitted)
+            {
+                Debug.LogError($"{SaveSystemConstants.LOG_PREFIX} SaveSystem is not initialized");
+                callback.Invoke(false);
+            }
+
+            FileSaver.FileExists(Config.ConfigFileName,
+                (existsData) =>
+                {
+                    if (!existsData.Success)
+                    {
+                        Debug.LogError($"{SaveSystemConstants.LOG_PREFIX} Loading '{Config.ConfigFileName}' failed, file does not exist");
+                        callback.Invoke(false);
+                        return;
+                    }
+
+                    callback.Invoke(existsData.FileExists);
+                });
+        }
+
         public void SetCurrentConfigData(ConfigFileDataType configData)
         {
             CurrentConfigFileData = configData;
@@ -260,7 +282,7 @@ namespace FrameworksXD.SavesXD
         {
             if (IsCurrentlySavingConfig())
             {
-                Debug.LogError($"{SaveSystemConstants.LOG_PREFIX} config saving is already in progress, can't start another saving");
+                Debug.LogError($"{SaveSystemConstants.LOG_PREFIX} config saving is already in progress, can't start to load");
                 callback?.Invoke(false);
                 return;
             }
@@ -270,15 +292,9 @@ namespace FrameworksXD.SavesXD
                 callback?.Invoke(false);
                 return;
             }
-            if (CurrentConfigFileData == null)
-            {
-                Debug.LogError($"{SaveSystemConstants.LOG_PREFIX} config data not loaded or created, cannot save it");
-                callback?.Invoke(false);
-                return;
-            }
 
             CurrentlyLoadingConfig = true;
-            LoadConfig((ConfigFileDataType config) =>
+            LoadConfigFile((ConfigFileDataType config) =>
                 {
                     CurrentlyLoadingConfig = false;
                     CurrentConfigFileData = config;
@@ -394,7 +410,7 @@ namespace FrameworksXD.SavesXD
             FileSaver.FileExists(GetSaveFileName(i), existsCallback);
         }
 
-        private void LoadConfig(System.Action<ConfigFileDataType> callback)
+        private void LoadConfigFile(System.Action<ConfigFileDataType> callback)
         {
             if (!IsInitted)
             {
